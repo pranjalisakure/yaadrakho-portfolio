@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1783977009672,
+      "tag": "0000_wise_red_skull",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1783978337314,
+      "tag": "0001_small_jazinda",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1783978931141,
+      "tag": "0002_dark_brood",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1783980841536,
+      "tag": "0003_reflective_baron_strucker",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1783985662772,
+      "tag": "0004_normal_omega_sentinel",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "name": "yaadrakho-customer-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "npm run build && node --test tests/rendered-html.test.mjs",
+    "test:ledger": "node tests/payment-ledger-migration.test.mjs && node tests/payment-receipts-migration.test.mjs && tsx tests/payment-ledger.integration.ts",
+    "test:admin": "tsx tests/admin-analytics.integration.ts",
+    "test:reminders": "node tests/reminder-migration.test.mjs && tsx tests/reminders.integration.ts",
+    "test:duplicates": "node tests/customer-duplicates-migration.test.mjs && tsx tests/customer-duplicates.integration.ts",
+    "test:billing": "node tests/billing-migration.test.mjs && tsx tests/billing.integration.ts",
+    "test:multi-business": "node tests/multi-business-payments-migration.test.mjs && tsx tests/multi-business-payments.integration.ts",
+    "test:razorpay": "node tests/razorpay-migration.test.mjs && tsx tests/razorpay.integration.ts",
+    "test:auth-preview": "tsx tests/preview-manual-verification.integration.ts",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern .codex-artifacts --ignore-pattern android/build",
+    "db:generate": "drizzle-kit generate",
+    "test:phase9": "node --import tsx tests/phase9.integration.ts",
+    "test:payment-qr": "node --import tsx tests/payment-qr.integration.ts",
+    "audit:payments": "node scripts/audit-payment-data.mjs",
+    "test:data-audit": "node --test tests/payment-data-audit.test.mjs",
+    "test:payment-review": "node --import tsx tests/payment-review.integration.ts",
+    "test:vercel-schedule": "node --test tests/vercel-schedule.test.mjs",
+    "test:order-recovery": "node --import tsx tests/order-recovery.integration.ts",
+    "test:sms-auth": "node --import tsx tests/sms-auth.integration.ts",
+    "test:local-auth": "node --import tsx tests/local-demo-auth.integration.ts",
+    "test:release": "node scripts/release-check.mjs",
+    "test:backup": "node tests/database-backup.integration.mjs"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.15",
+    "drizzle-orm": "0.45.2",
+    "next": "16.4.3",
+    "qrcode": "^1.5.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.63.0",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@types/web-push": "^3.6.4",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.34",
+    "drizzle-kit": "0.31.11",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.4.3",
+    "jsqr": "^1.4.0",
+    "react-server-dom-webpack": "19.2.8",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vinext": "1.0.1",
+    "vite": "8.3.4",
+    "wrangler": "4.148.0"
+  },
+  "type": "module",
+  "optionalDependencies": {
+    "@libsql/linux-x64-gnu": "0.5.29",
+    "@tailwindcss/oxide-linux-x64-gnu": "4.2.1",
+    "@unrs/resolver-binding-linux-x64-gnu": "1.11.1",
+    "lightningcss-linux-x64-gnu": "1.31.1"
+  },
+  "overrides": {
+    "miniflare": {
+      "undici": "7.30.1"
+    },
+    "ws": "8.21.0",
+    "sharp": "0.35.5",
+    "fflate": "0.7.5"
+  }
+}

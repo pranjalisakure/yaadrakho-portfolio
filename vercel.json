@@ -1,0 +1,41 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [
+    {
+      "path": "/api/cron/reminders?hour=09",
+      "schedule": "30 3 * * *"
+    },
+    {
+      "path": "/api/cron/reminders?hour=11",
+      "schedule": "30 5 * * *"
+    },
+    {
+      "path": "/api/cron/reminders?hour=12",
+      "schedule": "30 6 * * *"
+    },
+    {
+      "path": "/api/cron/reminders?hour=13",
+      "schedule": "30 7 * * *"
+    },
+    {
+      "path": "/api/cron/reminders?hour=15",
+      "schedule": "30 9 * * *"
+    },
+    {
+      "path": "/api/cron/reminders?hour=17",
+      "schedule": "30 11 * * *"
+    },
+    {
+      "path": "/api/cron/reminders?hour=18",
+      "schedule": "30 12 * * *"
+    },
+    {
+      "path": "/api/cron/reminders?hour=19",
+      "schedule": "30 13 * * *"
+    },
+    {
+      "path": "/api/cron/reminders?hour=21",
+      "schedule": "30 15 * * *"
+    }
+  ]
+}

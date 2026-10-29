@@ -1,0 +1,30 @@
+name: YaadRakho release checks
+on:
+  push:
+    branches: [main, codex/phase-9-stabilization]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: release-checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run test:release
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-check-results
+          path: outputs/release-checks.json
+          if-no-files-found: ignore
+          retention-days: 14

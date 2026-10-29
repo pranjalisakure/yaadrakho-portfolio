@@ -1,0 +1,62 @@
+name: YaadRakho datewise reminders
+
+on:
+  schedule:
+    # Separate entries preserve the intended Asia/Kolkata hour even when GitHub starts late.
+    - cron: "30 3 * * *"  # 09:00 IST
+    - cron: "30 5 * * *"  # 11:00 IST
+    - cron: "30 6 * * *"  # 12:00 IST (optional)
+    - cron: "30 7 * * *"  # 13:00 IST
+    - cron: "30 9 * * *"  # 15:00 IST
+    - cron: "30 11 * * *" # 17:00 IST
+    - cron: "30 12 * * *" # 18:00 IST (optional)
+    - cron: "30 13 * * *" # 19:00 IST
+    - cron: "30 15 * * *" # 21:00 IST
+  workflow_dispatch:
+    inputs:
+      reminder_hour:
+        description: Reminder hour in Asia/Kolkata
+        required: true
+        default: "09"
+        type: choice
+        options:
+          - "09"
+          - "11"
+          - "12"
+          - "13"
+          - "15"
+          - "17"
+          - "18"
+          - "19"
+          - "21"
+
+jobs:
+  send-reminders:
+    if: ${{ false }} # Portfolio only: never contact the private deployment.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger protected YaadRakho reminder job
+        env:
+          CRON_SECRET: ${{ secrets.VERCEL_CRON_SECRET }}
+          SCHEDULED_CRON: ${{ github.event.schedule }}
+          MANUAL_HOUR: ${{ inputs.reminder_hour }}
+        run: |
+          test -n "$CRON_SECRET"
+          SLOT="$MANUAL_HOUR"
+          if [ -n "$SCHEDULED_CRON" ]; then
+            case "$SCHEDULED_CRON" in
+              "30 3 * * *") SLOT="09" ;;
+              "30 5 * * *") SLOT="11" ;;
+              "30 6 * * *") SLOT="12" ;;
+              "30 7 * * *") SLOT="13" ;;
+              "30 9 * * *") SLOT="15" ;;
+              "30 11 * * *") SLOT="17" ;;
+              "30 12 * * *") SLOT="18" ;;
+              "30 13 * * *") SLOT="19" ;;
+              "30 15 * * *") SLOT="21" ;;
+            esac
+          fi
+          test -n "$SLOT"
+          curl --fail-with-body --retry 2 \
+            --header "Authorization: Bearer $CRON_SECRET" \
+            "https://yaadrakho-customer-tracker.vercel.app/api/cron/reminders?hour=$SLOT"
